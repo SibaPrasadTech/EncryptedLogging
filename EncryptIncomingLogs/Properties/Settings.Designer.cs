@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EncryptIncomingLogs.Properties
+namespace EncryptionTools.Properties
 {
 
 

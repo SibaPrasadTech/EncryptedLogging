@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace EncryptIncomingLogs
+namespace EncryptionTools
 {
     internal static class Program
     {
@@ -16,7 +16,7 @@ namespace EncryptIncomingLogs
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EncryptIncomingLog());
+            Application.Run(new EncryptionTool());
         }
     }
 }
