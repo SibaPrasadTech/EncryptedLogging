@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptLogging", "EncryptLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecryptLogs", "DecryptLogs\DecryptLogs.csproj", "{C6B94C7B-B6B9-4B55-92A3-1835E9B87DD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncryptIncomingLogs", "EncryptIncomingLogs\EncryptIncomingLogs.csproj", "{00FB78AB-F6F5-41A4-BFDF-B63633DB00F0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DecryptionTool", "EncryptIncomingLogs\DecryptionTool.csproj", "{00FB78AB-F6F5-41A4-BFDF-B63633DB00F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

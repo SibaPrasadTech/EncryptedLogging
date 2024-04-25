@@ -10,10 +10,11 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace EncryptionTools
 {
-    public partial class EncryptionTool : Form
+    public partial class DecryptionTool : Form
     {
         // Path variables for base directory
         private string baseDirectory;
@@ -27,14 +28,14 @@ namespace EncryptionTools
         private static readonly string ivBoundary = " #?* ";
         private static readonly string logBoundary = "\r\n#?*";
 
-        private void EncryptionTool_Load(object sender, EventArgs e)
+        private void DecryptionTool_Load(object sender, EventArgs e)
         {
 
         }
-        public EncryptionTool()
+        public DecryptionTool()
         {
             InitializeComponent();
-            using (Aes aes = Aes.Create())
+            /*using (Aes aes = Aes.Create())
             {
                 aes.GenerateKey();
                 Array.Copy(aes.Key, Key, aes.Key.Length);
@@ -52,10 +53,10 @@ namespace EncryptionTools
                 rsa.FromXmlString(publicKey);
                 byte[] encryptedKeyBytes = rsa.Encrypt(Key, false);
                 encryptedAESKey = Convert.ToBase64String(encryptedKeyBytes);
-            }
+            }*/
         }
         // Encryption Key Generation and Saving
-        public void WriteKeysToFile()
+        /*public void WriteKeysToFile()
         {
             SaveFileDialog saveFileDialog = new SaveFileDialog();
             //saveFileDialog.Filter = "XML Files|*.xml";
@@ -107,7 +108,8 @@ namespace EncryptionTools
         {
             WriteKeysToFile();
         }
-        private void SubmitLog_Click(object sender, EventArgs e)
+        */
+        /*private void SubmitLog_Click(object sender, EventArgs e)
         {
             // Get the text from the TextBox
             string inputText = textBoxInput.Text;
@@ -116,17 +118,24 @@ namespace EncryptionTools
             EncryptLogAppendToFile(inputText);
             textBoxInput.Clear();
             statusLabel.Text = "Submitted log";
+        }*/
+        public static byte[] FromHexString(string hexString)
+        {
+            byte[] bytes = new byte[hexString.Length / 2];
+            for (int i = 0; i < hexString.Length; i += 2)
+            {
+                bytes[i / 2] = Convert.ToByte(hexString.Substring(i, 2), 16);
+            }
+            return bytes;
         }
-        public static byte[] EncryptString(string plainText, byte[] key, byte[] iv)
+        /*public static byte[] EncryptString(string plainText, byte[] key, byte[] iv)
         {
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = key;
                 aesAlg.IV = iv;
-
                 // Create an encryptor to perform the stream transform
                 ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
                 // Create the streams used for encryption
                 using (MemoryStream msEncrypt = new MemoryStream())
                 {
@@ -156,28 +165,30 @@ namespace EncryptionTools
             using (Aes aes = Aes.Create())
             {
                 aes.Key = Key;
-                using (FileStream outputFileStream = new FileStream(outFile, FileMode.Append, FileAccess.Write))
+                aes.GenerateIV();
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
+                using (StreamWriter outputFileStream = new StreamWriter(outFile, true))
                 {
-                    // Generate a random IV for each encryption operation
-                    aes.GenerateIV();
-
                     // Encrypt the line
                     byte[] encryptedBytes = EncryptString(inputText, aes.Key, aes.IV);
-
+                    string ivHexString = BitConverter.ToString(aes.IV).Replace("-", "");
+                    outputFileStream.Write(ivHexString);
                     // Write the IV to the OutputStream
-                    outputFileStream.Write(aes.IV, 0, aes.IV.Length);
+                    //outputFileStream.Write(aes.IV, 0, aes.IV.Length);
                     //outputFileStream.Write(Encoding.UTF8.GetBytes(Environment.NewLine), 0, Environment.NewLine.Length);
-                    outputFileStream.Write(Encoding.UTF8.GetBytes(ivBoundary), 0, 5);
+                    outputFileStream.Write(ivBoundary);
                     //outputFileStream.Write(encryptedBytes.Length, 0, aes.IV.Length)
                     // Write the encrypted text to the OutputStream
-                    outputFileStream.Write(encryptedBytes, 0, encryptedBytes.Length);
-                    outputFileStream.Write(Encoding.UTF8.GetBytes(logBoundary), 0, 5);
+                    outputFileStream.Write(BitConverter.ToString(encryptedBytes).Replace("-", ""));
+                    outputFileStream.Write(logBoundary);
                     //outputFileStream.Write(Encoding.UTF8.GetBytes(Environment.NewLine), 0, Environment.NewLine.Length);
                 }
             } 
             textBoxInput.Clear();
             statusLabel.Text = "Appended the encrypted log to : " + outFile;
-        }
+        }*/
+
         // Decryption Process
         private void SelectKeyFile_Click(object sender, EventArgs e)
         {
@@ -211,6 +222,7 @@ namespace EncryptionTools
                             byte[] encryptedAESKeyBytes = Convert.FromBase64String(encryptedAESKeyBase64);
                             byte[] decryptedAESKeyBytes = DecryptAESKeyWithPrivateKey(encryptedAESKeyBytes, privateKey);
                             Array.Copy(decryptedAESKeyBytes, decryptedKey, decryptedAESKeyBytes.Length);
+                            keyLabel.Text = "Key file loaded successfully!";
                             MessageBox.Show("Key file loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             //byte[] decryptedKeyBytes = _rsa.Decrypt(encryptedKeyBytes, false);
                             //Array.Copy(decryptedKeyBytes, Key, decryptedKeyBytes.Length);
@@ -260,9 +272,9 @@ namespace EncryptionTools
                         // Decrypt the file and display the decrypted content in the outputTextBox
                         try
                         {
-                            string decryptedContent = DecryptFromFile(new FileInfo(encryptedFilePath));
-                            decryptPreview.Text = decryptedContent;
-                            decryptLabel.Text = "Decryption Status: Logs decrypted successfully and stored in the log file path";
+                            string decryptedFilepath = DecryptFromFile(new FileInfo(encryptedFilePath));
+                            //decryptPreview.Text = decryptedContent;
+                            statusLabel.Text = "Decrypted Log is stored at : " + decryptedFilepath;
                         }
                         catch (Exception ex)
                         {
@@ -275,13 +287,10 @@ namespace EncryptionTools
         public static string DecryptFromFile(FileInfo file)
         {
             // Construct the file name for the decrypted file.
-            string outFile = Path.ChangeExtension(file.FullName.Replace("encrypted", "decrypted"), ".txt");
-            StringBuilder decryptedText = new StringBuilder();
-
+            string outFile = Path.ChangeExtension(file.FullName.Replace("encrypted", "decrypted"), ".decryptedlog");
+            //StringBuilder decryptedText = new StringBuilder();
             using (Aes aes = Aes.Create())
             {
-                aes.Key = decryptedKey;
-
                 using (FileStream inputFileStream = new FileStream(file.FullName, FileMode.Open, FileAccess.Read))
                 using (StreamWriter writer = new StreamWriter(outFile))
                 {
@@ -289,8 +298,12 @@ namespace EncryptionTools
                     {
                         // Read the IV
                         byte[] iv = new byte[aes.IV.Length];
-                        inputFileStream.Read(iv, 0, iv.Length);
-
+                        //inputFileStream.Read(iv, 0, iv.Length);
+                        // Read the IV in hexadecimal string format
+                        byte[] ivHexStringBytes = new byte[aes.IV.Length * 2]; // Each byte corresponds to 2 characters in the hex string
+                        inputFileStream.Read(ivHexStringBytes, 0, ivHexStringBytes.Length);
+                        string ivHexString = Encoding.UTF8.GetString(ivHexStringBytes);
+                        iv = FromHexString(ivHexString);
                         // Check for the custom boundary
                         byte[] boundary = new byte[5];
                         inputFileStream.Read(boundary, 0, boundary.Length);
@@ -334,28 +347,27 @@ namespace EncryptionTools
                             {
                                 encryptedDataList.Add((byte)byteDat); // Add each byte to the list
                             }
-
                         }
-
                         // Convert list to byte array
                         byte[] encryptedData = encryptedDataList.ToArray();
-
                         // Decrypt the encrypted data
-                        string decryptedString = DecryptString(encryptedData, iv);
+                        string decryptedString = DecryptString(FromHexString(Encoding.UTF8.GetString(encryptedData)), iv);
                         // Append decrypted text to the StringBuilder
-                        decryptedText.AppendLine(decryptedString);
+                        //decryptedText.AppendLine(decryptedString);
                         writer.WriteLine(decryptedString);
                     }
                 }
             }
-            return decryptedText.ToString();
+            return outFile;
         }
         public static string DecryptString(byte[] cipherText, byte[] iv)
         {
             using (Aes aes = Aes.Create())
             {
-                aes.Key = Key;
+                aes.Key = decryptedKey;
                 aes.IV = iv;
+                aes.Mode = CipherMode.CBC;
+                aes.Padding = PaddingMode.PKCS7;
 
                 using (MemoryStream memoryStream = new MemoryStream(cipherText))
                 using (CryptoStream cryptoStream = new CryptoStream(memoryStream, aes.CreateDecryptor(), CryptoStreamMode.Read))
@@ -382,9 +394,74 @@ namespace EncryptionTools
                 return rsa.Decrypt(encryptedAESKeyBytes, false);
             }
         }
-        private void splitContainer1_Panel2_Paint(object sender, PaintEventArgs e)
-        {
 
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string rawXmlencryptedAESKey = textBox2.Text.Trim(); // Trim to remove leading/trailing whitespace
+                string encryptedAESKeyBase64;
+                if (!string.IsNullOrEmpty(rawXmlencryptedAESKey))
+                {
+                    try
+                    {
+                        XmlDocument xDoc = new XmlDocument();
+                        xDoc.LoadXml(rawXmlencryptedAESKey);
+                        XmlNodeList encryptedAESKeyNodeList = xDoc.GetElementsByTagName("EncryptedAESKey");
+                        //XmlNodeList privateKeyNodeList = xDoc.GetElementsByTagName("RSAPrivateKey");
+                        // Set RSA private key
+                        encryptedAESKeyBase64 = encryptedAESKeyNodeList[0].InnerText;
+                        // Do something with xDoc...
+                    }
+                    catch (XmlException ex)
+                    {
+                        MessageBox.Show("Invalid Key. Kindly paste a valid key in following xml format. <EncryptedAESKey>Your Key</EncryptedAESKey>" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        throw ex;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Encrypted Key is empty", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                string rawXmlPrivateKey = textBox1.Text.Trim();
+                if (!string.IsNullOrEmpty(rawXmlPrivateKey))
+                {
+                    try
+                    {
+                        XmlDocument xDoc = new XmlDocument();
+                        xDoc.LoadXml(rawXmlPrivateKey);
+                        XmlNodeList privateKeyNodeList = xDoc.GetElementsByTagName("RSAPrivateKey");
+                        // Set RSA private key
+                        privateKey = privateKeyNodeList[0].InnerText;
+                        // Do something with xDoc...
+                    }
+                    catch (XmlException ex)
+                    {
+                        MessageBox.Show("Invalid Key. Kindly paste a valid key in following xml format. <RSAPrivateKey>Your Key</RSAPrivateKey>" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        throw ex;
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Private Key is empty");
+                    return;
+                }
+                byte[] encryptedAESKeyBytes = Convert.FromBase64String(encryptedAESKeyBase64);
+                byte[] decryptedAESKeyBytes = DecryptAESKeyWithPrivateKey(encryptedAESKeyBytes, privateKey);
+                Array.Copy(decryptedAESKeyBytes, decryptedKey, decryptedAESKeyBytes.Length);
+                keyLabel.Text = "Key file loaded successfully!";
+                MessageBox.Show("Keys loaded successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //byte[] decryptedKeyBytes = _rsa.Decrypt(encryptedKeyBytes, false);
+                //Array.Copy(decryptedKeyBytes, Key, decryptedKeyBytes.Length);
+                //MessageBox.Show("AES key decrypted and set successfully.");
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show("Error decrypting AES key: " + ex.Message);
+                //throw ex;
+            }
         }
+        
     }
 }

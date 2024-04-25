@@ -16,7 +16,7 @@ namespace EncryptionTools
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new EncryptionTool());
+            Application.Run(new DecryptionTool());
         }
     }
 }

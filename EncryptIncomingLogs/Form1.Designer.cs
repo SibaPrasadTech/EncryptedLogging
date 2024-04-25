@@ -1,6 +1,6 @@
 ﻿namespace EncryptionTools
 {
-    partial class EncryptionTool
+    partial class DecryptionTool
     {
         /// <summary>
         /// Required designer variable.
@@ -28,128 +28,48 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.generateKeyFile = new System.Windows.Forms.Button();
-            this.textBoxInput = new System.Windows.Forms.TextBox();
-            this.submitLog = new System.Windows.Forms.Button();
             this.statusLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.keyLabel = new System.Windows.Forms.Label();
-            this.decryptPreview = new System.Windows.Forms.TextBox();
-            this.decryptLabel = new System.Windows.Forms.Label();
             this.decryptFile = new System.Windows.Forms.Button();
             this.selectKeyFile = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // generateKeyFile
-            // 
-            this.generateKeyFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.generateKeyFile.Location = new System.Drawing.Point(88, 96);
-            this.generateKeyFile.Name = "generateKeyFile";
-            this.generateKeyFile.Size = new System.Drawing.Size(177, 39);
-            this.generateKeyFile.TabIndex = 1;
-            this.generateKeyFile.Text = "Generate Key File";
-            this.generateKeyFile.UseVisualStyleBackColor = true;
-            this.generateKeyFile.Click += new System.EventHandler(this.GetPrivateKey_Click);
-            // 
-            // textBoxInput
-            // 
-            this.textBoxInput.Location = new System.Drawing.Point(39, 231);
-            this.textBoxInput.Multiline = true;
-            this.textBoxInput.Name = "textBoxInput";
-            this.textBoxInput.Size = new System.Drawing.Size(287, 200);
-            this.textBoxInput.TabIndex = 2;
-            // 
-            // submitLog
-            // 
-            this.submitLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.submitLog.Location = new System.Drawing.Point(139, 437);
-            this.submitLog.Name = "submitLog";
-            this.submitLog.Size = new System.Drawing.Size(75, 27);
-            this.submitLog.TabIndex = 3;
-            this.submitLog.Text = "Submit Log";
-            this.submitLog.UseVisualStyleBackColor = true;
-            this.submitLog.Click += new System.EventHandler(this.SubmitLog_Click);
-            // 
             // statusLabel
             // 
             this.statusLabel.AutoSize = true;
             this.statusLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.statusLabel.Location = new System.Drawing.Point(40, 550);
+            this.statusLabel.Location = new System.Drawing.Point(3, 69);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(54, 17);
+            this.statusLabel.Size = new System.Drawing.Size(265, 17);
             this.statusLabel.TabIndex = 4;
-            this.statusLabel.Text = "Status";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(92, 211);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(173, 17);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "SAMPLE ENCRYPTION";
-            // 
-            // splitContainer1
-            // 
-            this.splitContainer1.Location = new System.Drawing.Point(43, 36);
-            this.splitContainer1.Name = "splitContainer1";
-            // 
-            // splitContainer1.Panel1
-            // 
-            this.splitContainer1.Panel1.Controls.Add(this.generateKeyFile);
-            this.splitContainer1.Panel1.Controls.Add(this.label1);
-            this.splitContainer1.Panel1.Controls.Add(this.submitLog);
-            this.splitContainer1.Panel1.Controls.Add(this.textBoxInput);
-            // 
-            // splitContainer1.Panel2
-            // 
-            this.splitContainer1.Panel2.Controls.Add(this.keyLabel);
-            this.splitContainer1.Panel2.Controls.Add(this.decryptPreview);
-            this.splitContainer1.Panel2.Controls.Add(this.decryptLabel);
-            this.splitContainer1.Panel2.Controls.Add(this.decryptFile);
-            this.splitContainer1.Panel2.Controls.Add(this.selectKeyFile);
-            this.splitContainer1.Panel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.splitContainer1.Panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel2_Paint);
-            this.splitContainer1.Size = new System.Drawing.Size(1091, 477);
-            this.splitContainer1.SplitterDistance = 363;
-            this.splitContainer1.TabIndex = 6;
+            this.statusLabel.Text = "Decryption Status : No file selected";
             // 
             // keyLabel
             // 
             this.keyLabel.AutoSize = true;
-            this.keyLabel.Location = new System.Drawing.Point(211, 115);
+            this.keyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.keyLabel.Location = new System.Drawing.Point(33, 187);
             this.keyLabel.Name = "keyLabel";
-            this.keyLabel.Size = new System.Drawing.Size(234, 20);
+            this.keyLabel.Size = new System.Drawing.Size(244, 17);
             this.keyLabel.TabIndex = 4;
             this.keyLabel.Text = "Key Status : No key file selected";
-            // 
-            // decryptPreview
-            // 
-            this.decryptPreview.Location = new System.Drawing.Point(31, 231);
-            this.decryptPreview.Multiline = true;
-            this.decryptPreview.Name = "decryptPreview";
-            this.decryptPreview.Size = new System.Drawing.Size(557, 200);
-            this.decryptPreview.TabIndex = 3;
-            // 
-            // decryptLabel
-            // 
-            this.decryptLabel.AutoSize = true;
-            this.decryptLabel.Location = new System.Drawing.Point(211, 199);
-            this.decryptLabel.Name = "decryptLabel";
-            this.decryptLabel.Size = new System.Drawing.Size(278, 20);
-            this.decryptLabel.TabIndex = 2;
-            this.decryptLabel.Text = "Decryption Preview : No Logs selected";
             // 
             // decryptFile
             // 
             this.decryptFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.decryptFile.Location = new System.Drawing.Point(31, 182);
+            this.decryptFile.Location = new System.Drawing.Point(6, 29);
             this.decryptFile.Name = "decryptFile";
             this.decryptFile.Size = new System.Drawing.Size(174, 37);
             this.decryptFile.TabIndex = 1;
@@ -159,8 +79,8 @@
             // 
             // selectKeyFile
             // 
-            this.selectKeyFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectKeyFile.Location = new System.Drawing.Point(31, 96);
+            this.selectKeyFile.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectKeyFile.Location = new System.Drawing.Point(6, 53);
             this.selectKeyFile.Name = "selectKeyFile";
             this.selectKeyFile.Size = new System.Drawing.Size(174, 39);
             this.selectKeyFile.TabIndex = 0;
@@ -168,18 +88,94 @@
             this.selectKeyFile.UseVisualStyleBackColor = true;
             this.selectKeyFile.Click += new System.EventHandler(this.SelectKeyFile_Click);
             // 
-            // EncryptionTool
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(117, 28);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(402, 20);
+            this.textBox1.TabIndex = 5;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(174, 72);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(345, 20);
+            this.textBox2.TabIndex = 6;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(20, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(91, 17);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Private Key";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(20, 75);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(148, 17);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Encrypted AES Key";
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.Location = new System.Drawing.Point(23, 111);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(124, 31);
+            this.button1.TabIndex = 9;
+            this.button1.Text = "Submit Keys";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.decryptFile);
+            this.panel1.Controls.Add(this.statusLabel);
+            this.panel1.Location = new System.Drawing.Point(36, 216);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(770, 95);
+            this.panel1.TabIndex = 10;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Location = new System.Drawing.Point(36, 25);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.selectKeyFile);
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.label1);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel2.Controls.Add(this.button1);
+            this.splitContainer1.Panel2.Controls.Add(this.label2);
+            this.splitContainer1.Panel2.Controls.Add(this.textBox2);
+            this.splitContainer1.Size = new System.Drawing.Size(770, 159);
+            this.splitContainer1.SplitterDistance = 233;
+            this.splitContainer1.TabIndex = 11;
+            // 
+            // DecryptionTool
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1178, 586);
+            this.ClientSize = new System.Drawing.Size(846, 350);
             this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.statusLabel);
-            this.Name = "EncryptionTool";
-            this.Text = "Encryption Tool";
-            this.Load += new System.EventHandler(this.EncryptionTool_Load);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.keyLabel);
+            this.Name = "DecryptionTool";
+            this.Text = "Decryption Tool";
+            this.Load += new System.EventHandler(this.DecryptionTool_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -190,17 +186,17 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button generateKeyFile;
-        private System.Windows.Forms.TextBox textBoxInput;
-        private System.Windows.Forms.Button submitLog;
         private System.Windows.Forms.Label statusLabel;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button selectKeyFile;
         private System.Windows.Forms.Button decryptFile;
-        private System.Windows.Forms.Label decryptLabel;
-        private System.Windows.Forms.TextBox decryptPreview;
         private System.Windows.Forms.Label keyLabel;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }
 
